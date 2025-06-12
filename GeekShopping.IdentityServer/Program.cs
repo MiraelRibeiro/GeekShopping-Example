@@ -32,6 +32,8 @@ var builderIdentity = builder.Services.AddIdentityServer(options =>
 .AddInMemoryClients(IdentityConfiguration.Clients)
 .AddAspNetIdentity<ApplicationUser>();
 
+builderIdentity.AddDeveloperSigningCredential();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -28,16 +28,11 @@ namespace GeekShopping.IdentityServer.Configuration
                 ClientId = "geek_shopping",
                 ClientSecrets = { new Secret("my_super_secret".Sha256())},
                 AllowedGrantTypes = GrantTypes.Code,
-                RedirectUris = {"https://localhost:4430/singin-oidc"},
+                RedirectUris = { "https://localhost:4430/signin-oidc" },
                 PostLogoutRedirectUris = { "https://localhost:4430/signout-callback-oidc" },
-                AllowedScopes = new List<string>
-                {
-                    IdentityServerConstants.StandardScopes.OpenId,
-                    IdentityServerConstants.StandardScopes.Email,
-                    IdentityServerConstants.StandardScopes.Profile,
-                    "geek_shopping"
-                }
-
+                AllowedScopes = { "openid", "profile", "geek_shopping" },
+                RequirePkce = true,
+                AllowOfflineAccess = true
             },
 
             new Client

@@ -1,4 +1,6 @@
 using GeekShooping.Web.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -17,7 +19,7 @@ namespace GeekShooping.Web.Controllers
         {
             return View();
         }
-
+        
         public IActionResult Privacy()
         {
             return View();
@@ -27,6 +29,17 @@ namespace GeekShooping.Web.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Login()
+        {
+            return Challenge(new AuthenticationProperties { RedirectUri = "/" }, "oidc");
+        }
+
+        public IActionResult Logout()
+        {
+            return SignOut("Cookies", "oidc");
         }
     }
 }
