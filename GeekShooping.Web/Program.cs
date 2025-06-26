@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddAuthentication(options =>
@@ -29,7 +30,7 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddHttpClient<IProductService, ProductService>(c =>
 {
-    var productApiUrl = builder.Configuration["https://localhost:4440"];
+    var productApiUrl = builder.Configuration["ServiceUrls:ProductAPI"];
     if (string.IsNullOrEmpty(productApiUrl))
     {
         throw new InvalidOperationException("ServiceUrls:ProductAPI configuration is missing.");
@@ -38,6 +39,7 @@ builder.Services.AddHttpClient<IProductService, ProductService>(c =>
 });
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

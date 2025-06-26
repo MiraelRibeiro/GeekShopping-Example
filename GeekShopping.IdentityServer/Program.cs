@@ -1,6 +1,9 @@
+using Duende.IdentityServer.Services;
 using GeekShopping.IdentityServer.Configuration;
-using GeekShopping.IdentityServer.DataBaseModel.Context;
 using GeekShopping.IdentityServer.Initializer;
+using GeekShopping.IdentityServer.Model;
+using GeekShopping.IdentityServer.Model.Context;
+using GeekShopping.IdentityServer.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,6 +22,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddDefaultTokenProviders();
 
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.AddScoped<RoleManager<IdentityRole>>();
 var builderIdentity = builder.Services.AddIdentityServer(options =>
 {
@@ -33,6 +37,7 @@ var builderIdentity = builder.Services.AddIdentityServer(options =>
 .AddAspNetIdentity<ApplicationUser>();
 
 builderIdentity.AddDeveloperSigningCredential();
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
@@ -40,6 +45,7 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
 }
 
 app.UseHttpsRedirection();
